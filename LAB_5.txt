@@ -1,0 +1,398 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Fri Aug 19 13:04:18 2022
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> CONNECT CSCE2029046/aman;
+Connected.
+SQL> select first from student by first;
+select first from student by first
+                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name from faculty
+  2  UNION
+  3  select first from student;
+
+NAME
+---------------
+Amir
+Brian
+Chang
+Collins
+Deborah
+Jones
+Jose
+Mickey
+Mobley
+Rajesh
+Rivera
+
+NAME
+---------------
+Sen
+Vajpayee
+Williams
+
+14 rows selected.
+
+SQL> select *from faculty order by roomid asc, deptid desc;
+
+ FACULTYID NAME                ROOMID PHO     DEPTID
+---------- --------------- ---------- --- ----------
+       111 Jones                   11 525          1
+       123 Mobley                  11 529          1
+       345 Sen                     12 579          3
+       235 Vajpayee                12 577          2
+       555 Chang                   17 587          5
+       333 Collins                 17 599          3
+       222 Williams                20 533          2
+       444 Rivera                  21 544          4
+
+8 rows selected.
+
+SQL> select count(studentid) from student group by starterm;
+select count(studentid) from student group by starterm
+                                              *
+ERROR at line 1:
+ORA-00904: "STARTERM": invalid identifier
+
+
+SQL> select count(studentid) from student group by startterm;
+
+COUNT(STUDENTID)
+----------------
+               4
+               1
+               1
+
+SQL> select avg(maxcount), roomid from crssection by roomid;
+select avg(maxcount), roomid from crssection by roomid
+                                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid;
+
+AVG(MAXCOUNT)     ROOMID
+------------- ----------
+           30         13
+         37.5         14
+   36.6666667         18
+         27.5         15
+           35         16
+            2         19
+
+6 rows selected.
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having avg(maxcount)>35;
+
+AVG(MAXCOUNT)     ROOMID
+------------- ----------
+         37.5         14
+   36.6666667         18
+
+SQL> select count(midterm),count(final),count(regstatus) from registration;
+
+COUNT(MIDTERM) COUNT(FINAL) COUNT(REGSTATUS)
+-------------- ------------ ----------------
+             7            7               18
+
+SQL> select avg(maxcount), roomid from location group by roomid where roomid>=10;
+select avg(maxcount), roomid from location group by roomid where roomid>=10
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from location group by roomid where min(maxcount)>=10;
+select avg(maxcount), roomid from location group by roomid where min(maxcount)>=10
+                                                           *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from location group by roomid having min(maxcount)>=10;
+select avg(maxcount), roomid from location group by roomid having min(maxcount)>=10
+                                                                      *
+ERROR at line 1:
+ORA-00904: "MAXCOUNT": invalid identifier
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10;
+
+AVG(MAXCOUNT)     ROOMID
+------------- ----------
+           30         13
+         37.5         14
+   36.6666667         18
+         27.5         15
+           35         16
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 having avg(maxcount)=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 having avg(maxcount)=35
+                                                                                      *
+ERROR at line 1:
+ORA-01787: only one clause allowed per query block
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 group by roomid having avg(maxcount)>=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 group by roomid having avg(maxcount)>=35
+                                                                                      *
+ERROR at line 1:
+ORA-01787: only one clause allowed per query block
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 having avg(maxcount)>=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 having avg(maxcount)>=35
+                                                                                      *
+ERROR at line 1:
+ORA-01787: only one clause allowed per query block
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 avg(maxcount)>=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 avg(maxcount)>=35
+                                                                                      *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10, avg(maxcount)>=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10, avg(maxcount)>=35
+                                                                                     *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 ,having avg(maxcount)>=35;
+select avg(maxcount), roomid from crssection group by roomid having min(maxcount)>=10 ,having avg(maxcount)>=35
+                                                                                      *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select avg(maxcount), roomid from crssection where maxcount>=10 group by roomid having avg(maxcount)>=35;
+
+AVG(MAXCOUNT)     ROOMID
+------------- ----------
+         37.5         14
+   36.6666667         18
+           35         16
+
+SQL> @"C:\Users\KIIT\Downloads\Emp.sql"
+Drop table DEPT
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+Drop table DEPENDENT
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+Table altered.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+Drop Table QUALIFICATION
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+DROP TABLE EMPLOYEE
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+Drop table EMPLEVEL
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+Drop table POSITION
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+COURSE                         TABLE
+CRSSECTION                     TABLE
+DEPARTMENT                     TABLE
+DEPENDENT                      TABLE
+DEPT                           TABLE
+EMPLEVEL                       TABLE
+EMPLOYEE                       TABLE
+FACULTY                        TABLE
+LOCATION                       TABLE
+MAJOR                          TABLE
+POSITION                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+QUALIFICATION                  TABLE
+REGISTRATION                   TABLE
+ROOM                           TABLE
+STUDENT                        TABLE
+TERM                           TABLE
+
+16 rows selected.
+
+SQL>

@@ -1,0 +1,125 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Sep 1 11:20:13 2022
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> CONNECT CSCE2029046/aman;
+Connected.
+SQL> select first||last,majordesc from student,major where major.studentid=student.studentid;
+select first||last,majordesc from student,major where major.studentid=student.studentid
+                                                      *
+ERROR at line 1:
+ORA-00904: "MAJOR"."STUDENTID": invalid identifier
+
+
+SQL> select first||last,majordesc from student,major where major.majorid=student.majorid;
+
+FIRST||LAST                    MAJORDESC
+------------------------------ -------------------------
+JoseDiaz                       AAS-Accounting
+AmirKhan                       AAS-Computer Science
+RajeshPatel                    BS-Accounting
+DeborahRickles                 BS-Computer Science
+MickeyTyler                    BS-Computer Science
+BrianLee                       BS-Telecommunications
+
+6 rows selected.
+
+SQL> select first||last from student,registration where startterm='WN03' and final='F' and student.studentid=registration.studentid;
+
+FIRST||LAST
+------------------------------
+JoseDiaz
+
+SQL> select first||last,name,building from tudent,faculty,location where student.facultyid=faculty.facultyid and faculty.roomid=location.roomid;
+select first||last,name,building from tudent,faculty,location where student.facultyid=faculty.facultyid and faculty.roomid=location.roomid
+                                      *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select first||last,name,building from student,faculty,location where student.facultyid=faculty.facultyid and faculty.roomid=location.roomid;
+
+FIRST||LAST                    NAME            BUILDIN
+------------------------------ --------------- -------
+JoseDiaz                       Mobley          Gandhi
+RajeshPatel                    Jones           Gandhi
+BrianLee                       Sen             Gandhi
+MickeyTyler                    Chang           Gandhi
+DeborahRickles                 Chang           Gandhi
+AmirKhan                       Williams        Gandhi
+
+6 rows selected.
+
+SQL> select courseid,section,faculty.facultyid,name from crssection,faculty where crssection.facultyid=faculty.facultyid(+);
+
+COURSE SE  FACULTYID NAME
+------ -- ---------- ---------------
+CIS253 11        111 Jones
+CIS265 02        111 Jones
+CIS265 01        111 Jones
+CIS253 31        123 Mobley
+CIS253 21        123 Mobley
+CIS253 01        123 Mobley
+AC101  10        345 Sen
+MA150  02        444 Rivera
+LA123  05
+CIS265 01
+
+10 rows selected.
+
+SQL> select fname||lname,deptname from employee,dept where dept.deptid=employee.deptid;
+
+FNAME||LNAME         DEPTNAME
+-------------------- ---------------
+JohnSmith            Finance
+LarryHouston         Marketing
+SandiRoberts         Finance
+AlexMcCall           InfoSys
+DerekDev             InfoSys
+JinkuShaw            Sales
+StanleyGarner        Sales
+SunnyChen            Finance
+
+8 rows selected.
+
+SQL> select fname||lname,deptname,posdesc,qualdesc from employee,dept,position,qualification where employee.deptid=dept.deptid and employee.positionid=position.positionid and employee.qualid=qualification.qualid;
+
+FNAME||LNAME         DEPTNAME        POSDESC         QUALDESC
+-------------------- --------------- --------------- ---------------
+DerekDev             InfoSys         Manager         Doctorate
+JohnSmith            Finance         President       Doctorate
+LarryHouston         Marketing       Manager         Masters
+SandiRoberts         Finance         Manager         Masters
+SunnyChen            Finance         Accountant      Bachelors
+AlexMcCall           InfoSys         Programmer      Associates
+StanleyGarner        Sales           Manager         High School
+
+7 rows selected.
+
+SQL> select deptname,fname||lname from dept,employee where deptname='Sales' and dept.deptid=employee.deptid;
+
+DEPTNAME        FNAME||LNAME
+--------------- --------------------
+Sales           JinkuShaw
+Sales           StanleyGarner
+
+SQL> select employee.employeeid,fname||lname,dependentid,depdob,relation from employee,dependent where employee.employeeid=dependent.employeeid(+);
+
+EMPLOYEEID FNAME||LNAME         DEPENDENTID DEPDOB    RELATION
+---------- -------------------- ----------- --------- ---------------
+       543 DerekDev                       2 28-SEP-54 Spouse
+       200 JinkuShaw                      1 14-OCT-88 Son
+       543 DerekDev                       1 10-JUN-76 Spouse
+       222 SunnyChen                      1 04-FEB-75 Spouse
+       222 SunnyChen                      2 23-AUG-97 Son
+       222 SunnyChen                      3 10-JUL-99 Daughter
+       111 JohnSmith                      1 12-DEC-45 Spouse
+       246 LarryHouston
+       123 SandiRoberts
+       135 StanleyGarner
+       433 AlexMcCall
+
+11 rows selected.
+
+SQL>

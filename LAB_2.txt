@@ -1,0 +1,320 @@
+SQL*Plus: Release 11.2.0.2.0 Production on Thu Aug 4 12:39:49 2022
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> CONNECT CSCE2029046/aman;
+Connected.
+SQL> stud(roll,name,age,CGPA,DOB,H,postal)
+SP2-0734: unknown command beginning "stud(roll,..." - rest of line ignored.
+SQL> create table stud(roll NUMBER(7), name VARCHAR(20), age NUMBER(20), CGPA NUMBER(4,2),DOB date,H VARCHAR(1),postal NUMBER(6));
+create table stud(roll NUMBER(7), name VARCHAR(20), age NUMBER(20), CGPA NUMBER(4,2),DOB date,H VARCHAR(1),postal NUMBER(6))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> select * from stud;
+
+      ROLL NAME                        AGE       CGPA H     POSTAL
+---------- -------------------- ---------- ---------- - ----------
+        46 aman                         20        8.8
+        12 qwerty                       23          9
+        34 qwer                         56        7.8
+
+SQL> select * from student;
+
+FIRST_NAME           LAST_NAME            ADDRESS              MOBILE_NUMBER
+-------------------- -------------------- -------------------- -------------
+DOB             CGPA
+--------- ----------
+qwerty               qwerty               qwerty                       12345
+12-DEC-01
+
+qwertyu              qwertyu              qwertyu                     123456
+12-MAR-01
+
+qwerty               qwertyui             qwe                            123
+01-APR-99        2.2
+
+
+SQL> drop table;
+drop table
+         *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> drop student;
+drop student
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> drop table stud;
+
+Table dropped.
+
+SQL> stud(roll,name,age,CGPA,DOB,H,postal)
+SP2-0734: unknown command beginning "stud(roll,..." - rest of line ignored.
+SQL> create table stud(roll NUMBER(7), name VARCHAR(20), age NUMBER(20), CGPA NUMBER(4,2),DOB date,H VARCHAR(1),postal NUMBER(6));
+
+Table created.
+
+SQL> describe stud;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLL                                               NUMBER(7)
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER(20)
+ CGPA                                               NUMBER(4,2)
+ DOB                                                DATE
+ H                                                  VARCHAR2(1)
+ POSTAL                                             NUMBER(6)
+
+SQL> INSERT INTO stud(&roll,'&name',&age,&CGPA,&DOB,'&H',&postal);
+Enter value for roll: 1
+Enter value for name: a
+Enter value for age: 12
+Enter value for cgpa: 9.7
+Enter value for dob: 12-march-2010
+Enter value for h: Y
+Enter value for postal: 221010
+old   1: INSERT INTO stud(&roll,'&name',&age,&CGPA,&DOB,'&H',&postal)
+new   1: INSERT INTO stud(1,'a',12,9.7,12-march-2010,'Y',221010)
+INSERT INTO stud(1,'a',12,9.7,12-march-2010,'Y',221010)
+                 *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL>  INSERT INTO stud(&roll,'&name',&age,&CGPA,&DOB,'&H',&postal)
+  2
+SQL>  INSERT INTO stud(&roll,'&name',&age,&CGPA,&DOB,'&H',&postal);
+Enter value for roll: 0000001
+Enter value for name: a
+Enter value for age: 20
+Enter value for cgpa: 9.7
+Enter value for dob: 12-march-2002
+Enter value for h: y
+Enter value for postal: 221010
+old   1:  INSERT INTO stud(&roll,'&name',&age,&CGPA,&DOB,'&H',&postal)
+new   1:  INSERT INTO stud(0000001,'a',20,9.7,12-march-2002,'y',221010)
+ INSERT INTO stud(0000001,'a',20,9.7,12-march-2002,'y',221010)
+                  *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL>  INSERT INTO stud(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 1
+Enter value for name: a
+Enter value for age: 22
+Enter value for cgpa: 9.7
+Enter value for dob: 22-march-2000
+Enter value for h: y
+Enter value for postal: 221010
+old   1:  INSERT INTO stud(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1:  INSERT INTO stud(1,'a',22,9.7,'22-march-2000','y',221010)
+ INSERT INTO stud(1,'a',22,9.7,'22-march-2000','y',221010)
+                  *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL>  INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: a
+Enter value for name: a
+Enter value for age: a
+Enter value for cgpa: a
+Enter value for dob: aa
+Enter value for h: a
+Enter value for postal: a
+old   1:  INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1:  INSERT INTO stud values(a,'a',a,a,'aa','a',a)
+ INSERT INTO stud values(a,'a',a,a,'aa','a',a)
+                                            *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 1
+Enter value for name: a
+Enter value for age: 22
+Enter value for cgpa: 9.6
+Enter value for dob: 22-march-2000
+Enter value for h: y
+Enter value for postal: 221010
+old   1: INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1: INSERT INTO stud values(1,'a',22,9.6,'22-march-2000','y',221010)
+
+1 row created.
+
+SQL> INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 2
+Enter value for name: abc
+Enter value for age: 22
+Enter value for cgpa: 9.12
+Enter value for dob: 1-april-2000
+Enter value for h: n
+Enter value for postal: 1234567
+old   1: INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1: INSERT INTO stud values(2,'abc',22,9.12,'1-april-2000','n',1234567)
+INSERT INTO stud values(2,'abc',22,9.12,'1-april-2000','n',1234567)
+                                                           *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 2
+Enter value for name: abc
+Enter value for age: 22
+Enter value for cgpa: 9.6
+Enter value for dob: 1-april-2000
+Enter value for h: n
+Enter value for postal: 123456
+old   1: INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1: INSERT INTO stud values(2,'abc',22,9.6,'1-april-2000','n',123456)
+
+1 row created.
+
+SQL> INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 3
+Enter value for name: dfg
+Enter value for age: 21
+Enter value for cgpa: 6.9
+Enter value for dob: 2-december-2001
+Enter value for h: y
+Enter value for postal: 234567
+old   1: INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1: INSERT INTO stud values(3,'dfg',21,6.9,'2-december-2001','y',234567)
+
+1 row created.
+
+SQL> INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal);
+Enter value for roll: 4
+Enter value for name: dfe
+Enter value for age: 20
+Enter value for cgpa: 8.5
+Enter value for dob: 2-october-2002
+Enter value for h: y
+Enter value for postal: 345678
+old   1: INSERT INTO stud values(&roll,'&name',&age,&CGPA,'&DOB','&H',&postal)
+new   1: INSERT INTO stud values(4,'dfe',20,8.5,'2-october-2002','y',345678)
+
+1 row created.
+
+SQL> select*from stud;
+
+      ROLL NAME                        AGE       CGPA DOB       H     POSTAL
+---------- -------------------- ---------- ---------- --------- - ----------
+         1 a                            22        9.6 22-MAR-00 y     221010
+         2 abc                          22        9.6 01-APR-00 n     123456
+         3 dfg                          21        6.9 02-DEC-01 y     234567
+         4 dfe                          20        8.5 02-OCT-02 y     345678
+
+SQL> alter table stud add(lname varchar(10));
+
+Table altered.
+
+SQL> update stud set lname='yo' where roll=1;
+
+1 row updated.
+
+SQL> update stud set lname='no' where roll=2;
+
+1 row updated.
+
+SQL> update stud set lname='po' where roll=3;
+
+1 row updated.
+
+SQL> update stud set lname='yo' where roll=4;
+
+1 row updated.
+
+SQL> select* from stud
+  2
+SQL> select8 from stud;
+select8 from stud
+*
+ERROR at line 1:
+ORA-24333: zero iteration count
+
+
+SQL> select* from stud;
+
+      ROLL NAME                        AGE       CGPA DOB       H     POSTAL
+---------- -------------------- ---------- ---------- --------- - ----------
+LNAME
+----------
+         1 a                            22        9.6 22-MAR-00 y     221010
+yo
+
+         2 abc                          22        9.6 01-APR-00 n     123456
+no
+
+         3 dfg                          21        6.9 02-DEC-01 y     234567
+po
+
+
+      ROLL NAME                        AGE       CGPA DOB       H     POSTAL
+---------- -------------------- ---------- ---------- --------- - ----------
+LNAME
+----------
+         4 dfe                          20        8.5 02-OCT-02 y     345678
+yo
+
+
+SQL> select name from stud where cgpa>8.5;
+
+NAME
+--------------------
+a
+abc
+
+SQL> select name from stud where name like 'a%';
+
+NAME
+--------------------
+a
+abc
+
+SQL> update stud set dob='4-jan-2001' where roll=4;
+
+1 row updated.
+
+SQL> select name,dob from stud order by dob desc;
+
+NAME                 DOB
+-------------------- ---------
+dfg                  02-DEC-01
+dfe                  04-JAN-01
+abc                  01-APR-00
+a                    22-MAR-00
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
